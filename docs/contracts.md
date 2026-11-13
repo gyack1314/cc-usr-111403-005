@@ -1,0 +1,7 @@
+# 资料语义与接口边界
+
+functions.py登记函数id、version、callable、input_types、output_type、pure和isolation_domain，函数接收一列或多列等长Python列表，返回等长列表，null由函数自己处理。types.py只支持int64/string/bool及nullable，bool不属于int64；越界、错长、错类型均为协议错误。wire.py已有JSON行协议编解码，包头含query_id、execution_id、call_id、row_ids和registry_digest，不提供进程池。实际子进程使用spawn或独立解释器；墙钟deadline限制适用于函数执行，取消后必须确认工作进程退出或不再接受其回包。仅pure可重试，最多次数由配置冻结；主进程以原call_id归并至多一次，错误选择按查询输入ordinal而非包到达顺序。函数版本变化或隔离域切换不得复用残留全局状态。
+
+functions.py保留同步本地调用；wire.py是序列化边界，未创建工作进程。abort与stall仅是登记的故障函数，普通读取及测试不调用它们。
+
+正文摘要绑定完整值，样例数据不限定输入规模；错误不等同空结果，接口使用中文错误说明。

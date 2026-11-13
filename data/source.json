@@ -1,0 +1,28 @@
+{
+  "calls": [
+    {
+      "query_id": "q1",
+      "execution_id": 1,
+      "call_id": "c1",
+      "row_ids": [
+        "r1",
+        "r2"
+      ],
+      "function": "double",
+      "columns": [
+        [
+          2,
+          null
+        ]
+      ]
+    }
+  ],
+  "registry": [
+    "double",
+    "stateful",
+    "explode",
+    "abort",
+    "stall"
+  ],
+  "max_retries": 1
+}
